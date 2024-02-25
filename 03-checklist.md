@@ -2,6 +2,7 @@
 
 ## Low-level
 
+- [ ] Script for searching for orphan pages
 - [ ] Use aspects
 
 ## Spring
