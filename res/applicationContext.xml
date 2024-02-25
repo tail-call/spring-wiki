@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- Объявление бина -->
+    <bean id="myBean" class="com.example.MyBean">
+        <!-- Внедрение простых значений -->
+        <property name="propertyName" value="propertyValue"/>
+
+        <!-- Примеры значений -->
+        <property name="message" value="Hello, world!"/>
+        <property name="count" value="123"/>
+        <property name="isActive" value="true"/>
+
+        <!-- Специальные типы данных -->
+        <property name="configLocation" value="classpath:com/example/config.xml"/>
+        <property name="fileLocation" value="file:/path/to/file.txt"/>
+        <property name="apiEndpoint" value="https://api.example.com"/>
+        <property name="numbers">
+          <list>
+              <value>1</value>
+              <value>2</value>
+              <value>3</value>
+          </list>
+        </property>
+        <property name="names">
+          <set>
+              <value>Alice</value>
+              <value>Bob</value>
+              <value>Charlie</value>
+          </set>
+        </property>
+        <property name="userRoles">
+            <map>
+                <entry key="admin" value="Administrator"/>
+                <entry key="user" value="Regular User"/>
+            </map>
+        </property>
+
+        <!-- Ссылки на объекты -->
+        <property name="nullValue" value="@null"/>
+        <property name="stringValue" value="@value('example.string')"/>
+        <property name="trueValue" value="@true"/>
+
+        <!-- Ресурсы -->
+        <property name="entityManagerFactory" value="@Resource(name='entityManagerFactory')"/>
+        <bean id="myBean" class="com.example.MyBean">
+          <property name="dataSource" value="@Resource(name='jdbc/myDataSource')"/>
+        </bean>
+
+        <!-- Выражения SpEL -->
+        <property name="randomNumber" value="#{T(java.lang.Math).random()}"/>
+        <property name="userName" value="#{systemProperties['user.name']}"/>
+
+        <!-- Переменные окружения -->
+        <property name="javaVersion" value="#{systemProperties['java.version']}"/>
+        <property name="homeDirectory" value="#{systemEnvironment['HOME']}"/>
+
+        <!-- Внедрение ссылок на другие бины -->
+        <property name="otherBean" ref="otherBean"/>
+        <property name="userService" ref="userService"/>
+        <property name="logger" ref="logger"/>
+        
+        <!-- Конструктор с аргументами -->
+        <constructor-arg value="constructorArgument"/>
+        
+        <!-- Аспекты -->
+        <aop:aspect ref="myAspect">
+            <aop:pointcut id="myPointcut" expression="execution(* com.example.MyBean.*(..))"/>
+            <aop:before pointcut-ref="myPointcut" method="beforeMethod"/>
+            <aop:after pointcut-ref="myPointcut" method="afterMethod"/>
+        </aop:aspect>
+        
+        <!-- Аспекты с использованием Advice -->
+        <aop:config>
+            <aop:pointcut id="myPointcut" expression="execution(* com.example.MyBean.*(..))"/>
+            <aop:advisor pointcut-ref="myPointcut" advice-ref="myAdvice"/>
+        </aop:config>
+        
+        <!-- Advice -->
+        <bean id="myAdvice" class="com.example.MyAdvice"/>
+        
+        <!-- Аспекты с использованием Advice и Pointcut -->
+        <aop:config>
+            <aop:pointcut id="myPointcut" expression="execution(* com.example.MyBean.*(..))"/>
+            <aop:advisor pointcut-ref="myPointcut" advice-ref="myAdvice"/>
+        </aop:config>
+        
+        <!-- Транзакции -->
+        <tx:advice id="txAdvice" transaction-manager="transactionManager">
+            <tx:attributes>
+                <tx:method name="*" propagation="REQUIRED"/>
+            </tx:attributes>
+        </tx:advice>
+        
+        <!-- Proxy -->
+        <aop:config>
+            <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.example.*.*(..))"/>
+        </aop:config>
+        
+        <!-- Аспекты с использованием Proxy -->
+        <aop:config>
+            <aop:pointcut id="myPointcut" expression="execution(* com.example.MyBean.*(..))"/>
+            <aop:advisor advice-ref="myAdvice" pointcut-ref="myPointcut"/>
+        </aop:config>
+        
+        <!-- Использование контекста приложения -->
+        <context:annotation-config/>
+        
+        <!-- Использование утилит -->
+        <util:list id="myList">
+            <value>value1</value>
+            <value>value2</value>
+        </util:list>
+    </bean>
+
+    <!-- Определение другого бина -->
+    <bean id="otherBean" class="com.example.OtherBean">
+        <!-- ... -->
+    </bean>
+
+    <!-- Импорт другого XML-файла конфигурации -->
+    <import resource="otherBeans.xml"/>
+
+</beans>
