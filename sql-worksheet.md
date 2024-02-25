@@ -125,6 +125,8 @@ FROM book;
 
 ### HAVING
 
+Следует после  `GROUP BY`.
+
 ```sql
 SELECT author, SUM(amount * price) AS Стоимость
 FROM book
@@ -140,3 +142,74 @@ GROUP BY author
 HAVING SUM(amount * price) > 5000
 ORDER BY SUM(amount * price) DESC;
 ```
+
+## Вложенные запросы
+
+Могут быть в выражении:
+
+```sql
+SELECT title, author, price, amount
+FROM book
+WHERE price = (
+   SELECT MIN(price) -- Вот он, вложенный запрос
+   FROM book
+);
+```
+
+```sql
+SELECT author, title, price
+FROM book
+WHERE price <= (
+    SELECT AVG(price)
+    FROM book
+)
+ORDER BY price DESC;
+```
+
+```sql
+SELECT title, author, amount 
+FROM book
+WHERE ABS(amount - (SELECT AVG(amount) FROM book)) > 3;
+--                  ^
+--            теперь он тут
+```
+
+```sql
+SELECT author, title, price
+FROM book
+WHERE price - (SELECT MIN(price) FROM book) <= 150
+ORDER BY price ASC;
+```
+
+А могут после `IN`:
+
+```sql
+SELECT species, owner, quantity, habitat_cost
+FROM lizard
+-- Владелец среди тех, у кого количество ящериц больше 12
+WHERE owner IN (
+    SELECT owner
+    FROM lizard
+    GROUP BY owner
+    HAVING SUM(quantity) >= 12
+);
+```
+
+```sql
+-- <https://stepik.org/lesson/297514/step/4?unit=279274>
+-- ???
+SELECT author, title, amount
+FROM book
+WHERE amount IN (
+    SELECT amount
+    FROM book
+    WHERE COUNT(amount) = 1
+);
+```
+
+
+
+```sql
+```
+
+<!-- ^ yap this guy -->
