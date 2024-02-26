@@ -1,6 +1,6 @@
 # Jakarta EE
 
-Jakarta EE (Enterprise Edition) is an open-source, community-driven platform for developing and deploying enterprise Java applications. It was formerly known as Java EE (Java Platform, Enterprise Edition) until the transfer of its stewardship from Oracle Corporation to the Eclipse Foundation in 2017.
+Jakarta EE (Enterprise Edition) is an open-source, community-driven platform for developing and deploying enterprise Java applications. It was formerly known as [Java EE (Java Platform, Enterprise Edition)](java-ee.md) until the transfer of its stewardship from Oracle Corporation to the Eclipse Foundation in 2017.
 
 Jakarta EE provides a set of specifications, APIs, and runtime environments that enable developers to build scalable, secure, and portable enterprise applications. It includes features such as web services, servlets, [JavaServer Pages (JSP)](jsp.md), [Enterprise JavaBeans (EJB)](ejb.md), [Java Persistence API (JPA)](jpa.md), and more.
 
