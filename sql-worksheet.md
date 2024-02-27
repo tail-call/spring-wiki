@@ -209,6 +209,13 @@ WHERE amount IN (
 ### ANY, ALL
 
 ```sql
+SELECT title, author, amount, price
+FROM book
+WHERE amount < ALL (
+    SELECT AVG(amount) 
+    FROM book 
+    GROUP BY author 
+);
 ```
 
 
