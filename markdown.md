@@ -48,10 +48,18 @@ Markdown - это простой в использовании формат ра
    [Текст ссылки](URL)
    ```
 
+   Либо:
+   ```
+   [java.util.function][juf]
+   
+   [juf]: https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html "Название ссылки"
+   ```
+
    Изображение:
    ```
    ![Описание изображения](URL_изображения)
    ```
+
 
 5. **Цитаты**:
 
