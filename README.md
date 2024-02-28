@@ -8,3 +8,10 @@ FAQ:
    A: Мне так норм.
 
 [Начало](intro.md)
+
+<!--#!/bin/zsh
+# I want to show orphans here
+
+bin/orphans.zsh
+
+#-->
